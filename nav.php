@@ -434,30 +434,32 @@
                                                         </div>
                                                         
                                                         <!--change_meal form-->
-                                                        <form action="edit.php" method="post">
-                                                          <div class="modal-body">
-                                                            <div class="row" >
-                                                              <div class="col-xs-6">
-                                                                <label for="ex71">price</label>
-                                                                <input name="new_price" class="form-control" id="ex71" type="text">
-                                                              </div>
-                                                              <div class="col-xs-6">
-                                                                <label for="ex41">quantity</label>
-                                                                <input name="new_quantity" class="form-control" id="ex41" type="text">
-                                                              </div>
+                                                        <form action="change.php" method="post">
+                                                            <div class="modal-body">
+                                                                <div class="row" >
+                                                                    <div class="col-xs-6">
+                                                                        <label for="ex71">Price</label>
+                                                                        <input class="form-control" id="ex71" name="product_price" type="text">
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <label for="ex41">Quantity</label>
+                                                                        <input class="form-control" id="ex41" name="product_amount" type="text">
+                                                                    </div>
+                                                                    <input type="hidden" name="PID" value="$PID">
+                                                                </div>
                                                             </div>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                            <input type="submit" name="id{$PID}" value="edit" class="btn btn-secondary">
-                                                          </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-secondary">Edit</button>
+                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         <form action="delete.php" method="post">
-                                            <td><input type="submit" name="delete_id{$PID}" value="Delete" class="btn btn-danger"><td>
+                                            <input type="hidden" name="PID" value="$PID">
+                                            <td><button type="submit" class="btn btn-danger">Delete</button></td>
                                         </form>
-                                    </tr>
+                                    
 EOT;
                             }
                         }
