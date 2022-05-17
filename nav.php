@@ -335,183 +335,92 @@
                 <hr>
             </form>
 
-            <form action="php/shop_add.php" method="post">
-                <h3>ADD</h3>
-                <div class="form-group ">
-                    <div class="row">
-
-                        <div class="col-xs-6">
-                            <label for="ex3">meal name</label>
-                            <input class="form-control" id="ex3" name="meal_name"
-                                   placeholder="<?php echo $_SESSION['meal_name']; ?>"
-                                   type="text" <?php echo $_SESSION['is_added']; ?>>
-                        </div>
+            <h3>ADD</h3>
+            <!-- upload meal -->
+            <form action="shop_add.php" method="post" class="form-group" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="ex3">meal name</label>
+                        <input name="product_name" class="form-control" id="ex3" type="text">
                     </div>
-                    <div class="row" style=" margin-top: 15px;">
-                        <div class="col-xs-3">
-                            <label for="ex7">price</label>
-                            <input class="form-control" id="ex7" name="price"
-                                   placeholder="<?php echo $_SESSION['price']; ?>"
-                                   type="text" <?php echo $_SESSION['is_added']; ?>>
-                        </div>
-                        <div class="col-xs-3">
-                            <label for="ex4">quantity</label>
-                            <input class="form-control" id="ex4" name="quantity"
-                                   placeholder="<?php echo $_SESSION['quantity']; ?>"
-                                   type="text" <?php echo $_SESSION['is_added']; ?>>
-                        </div>
+                </div>
+                <div class="row" style=" margin-top: 15px;">
+                    <div class="col-xs-3">
+                        <label for="ex7">price</label>
+                        <input name="product_price" class="form-control" id="ex7" type="text">
                     </div>
-
-
-                    <div class="row" style=" margin-top: 25px;">
-
-                        <div class=" col-xs-3">
-                            <label for="ex12">上傳圖片</label>
-                            <input id="myFile" type="file" name="myFile"
-                                   placeholder="<?php echo $_SESSION['myFile']; ?>"
-                                   multiple class="file-loading" <?php echo $_SESSION['is_added']; ?>>
-
-                        </div>
-                        <div class=" col-xs-3">
-
-                            <button type="submit" class="btn btn-default" <?php echo $_SESSION['is_added']; ?>>Add
-                            </button>
-                        </div>
+                    <div class="col-xs-3">
+                        <label for="ex4">quantity</label>
+                        <input name="product_amount" class="form-control" id="ex4" type="text">
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="  col-xs-8">
-                        <table class="table" style=" margin-top: 15px;">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Picture</th>
-                                <th scope="col">meal name</th>
+                <div class="row" style=" margin-top: 25px;">
 
-                                <th scope="col">price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td><img src="Picture/1.jpg" with="50" heigh="10" alt="Hamburger"></td>
-                                <td>Hamburger</td>
+                    <div class=" col-xs-3">
+                        <label for="ex12">上傳圖片</label>
+                        <input id="myFile" type="file" name="myFile" multiple class="file-loading">
+                    </div>
 
-                                <td>80</td>
-                                <td>20</td>
-                                <td>
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#Hamburger-1">
-                                        Edit
-                                    </button>
-                                </td>
-                                <!-- Modal -->
-                                <div class="modal fade" id="Hamburger-1" data-backdrop="static" tabindex="-1"
-                                     role="dialog"
-                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Hamburger Edit</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <label for="ex71">price</label>
-                                                        <input class="form-control" id="ex71" type="text">
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <label for="ex41">quantity</label>
-                                                        <input class="form-control" id="ex41" type="text">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Edit
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <td>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td><img src="Picture/2.jpg" with="10" heigh="10" alt="coffee"></td>
-                                <td>coffee</td>
-
-                                <td>50</td>
-                                <td>20</td>
-                                <td>
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#coffee-1">
-                                        Edit
-                                    </button>
-                                </td>
-                                <!-- Modal -->
-                                <div class="modal fade" id="coffee-1" data-backdrop="static" tabindex="-1" role="dialog"
-                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">coffee Edit</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <label for="ex72">price</label>
-                                                        <input class="form-control" id="ex72" type="text">
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <label for="ex42">quantity</label>
-                                                        <input class="form-control" id="ex42" type="text">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Edit
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <td>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
+                    <div class=" col-xs-3">
+                        <input style=" margin-top: 15px;" type="submit" class="btn btn-primary" value="Add">
                     </div>
 
                 </div>
             </form>
+            <div class="row">
+                <div class="  col-xs-8">
+                    <table class="table" style=" margin-top: 15px;">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Picture</th>
+                            <th scope="col">meal name</th>
+
+                            <th scope="col">price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
+                        $dbservername = 'localhost';
+                        $dbname = 'database_hw2';
+                        $dbusername = 'root';
+                        $dbpassword = '';
+
+                        //連結MySQL Server
+                        $conn = new PDO(
+                            "mysql:host=$dbservername;dbname=$dbname",
+                            $dbusername,
+                            $dbpassword
+                        );
+                        # set the PDO error mode to exception
+                        $conn->setAttribute(
+                            PDO::ATTR_ERRMODE,
+                            PDO::ERRMODE_EXCEPTION
+                        );
+                        $stmt = $conn->prepare("select * from product");
+                        $stmt->execute();
+                        while($row=$stmt->fetch()){
+                            $PID = $row['PID'];
+                            $product_name = $row['product_name'];
+                            $product_img = $row['product_img'];
+                            $product_img_type = $row['product_img_type'];
+                            $product_price = $row['product_price'];
+                            $product_amount = $row['product_amount'];
+                            $product_shop = $row['product_shop'];
+                            print_row($PID,$product_name,$product_img,$product_img_type,$product_price,$product_amount , $product_shop);
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
-
-
     </div>
 </div>
 
