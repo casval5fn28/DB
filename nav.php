@@ -55,8 +55,8 @@
                     Accouont: <?php echo $_SESSION['user_name']; ?>,
                     <?php echo $_SESSION['user_type']; ?>,
                     PhoneNumber: <?php echo $_SESSION['user_phone']; ?>,
-                    location: <?php echo $_SESSION['latitude']; ?>,
-                    <?php echo $_SESSION['longitude']; ?>
+                    location: <?php echo $_SESSION['user_latitude']; ?>,
+                    <?php echo $_SESSION['user_longitude']; ?>
                     <button type="button" style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
                             data-target="#location">edit location
                     </button>
@@ -64,27 +64,29 @@
                     <div class="modal fade" id="location" data-backdrop="static" tabindex="-1" role="dialog"
                          aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">edit location</h4>
+                            <form action="php/edit_location.php" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">edit location</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label class="control-label " for="latitude">latitude</label>
+                                        <input type="text" class="form-control" id="latitude" name="latitude"
+                                               placeholder="enter latitude">
+                                        <br>
+                                        <label class="control-label " for="longitude">longitude</label>
+                                        <input type="text" class="form-control" id="longitude" name="longitude"
+                                               placeholder="enter longitude">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Edit</button> -->
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                    <label class="control-label " for="latitude">latitude</label>
-                                    <input type="text" class="form-control" id="latitude" name="latitude"
-                                           placeholder="enter latitude">
-                                    <br>
-                                    <label class="control-label " for="longitude">longitude</label>
-                                    <input type="text" class="form-control" id="longitude" name="longitude"
-                                           placeholder="enter longitude">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Edit</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-
 
                     <!--  -->
                     walletbalance:<?php echo $_SESSION['user_balance']; ?>
@@ -95,18 +97,22 @@
                     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog"
                          aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Add value</h4>
+                            <form action="php/add_balance.php" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Add value</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" id="value"
+                                               placeholder="enter add value" name = "value">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Add</button>-->
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                    <input type="text" class="form-control" id="value" placeholder="enter add value">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -343,10 +349,10 @@
                     </div>
                     <div class="row" style=" margin-top: 15px;">
                         <div class="col-xs-3">
-                           <label for="ex7">price</label>
-                           <input class="form-control" id="ex7" name="price"
-                                  placeholder="<?php echo $_SESSION['price']; ?>"
-                                  type="text" <?php echo $_SESSION['is_added']; ?>>
+                            <label for="ex7">price</label>
+                            <input class="form-control" id="ex7" name="price"
+                                   placeholder="<?php echo $_SESSION['price']; ?>"
+                                   type="text" <?php echo $_SESSION['is_added']; ?>>
                         </div>
                         <div class="col-xs-3">
                             <label for="ex4">quantity</label>
@@ -361,13 +367,15 @@
 
                         <div class=" col-xs-3">
                             <label for="ex12">上傳圖片</label>
-                            <input id="myFile" type="file" name="myFile" placeholder="<?php echo $_SESSION['myFile']; ?>"
+                            <input id="myFile" type="file" name="myFile"
+                                   placeholder="<?php echo $_SESSION['myFile']; ?>"
                                    multiple class="file-loading" <?php echo $_SESSION['is_added']; ?>>
 
                         </div>
                         <div class=" col-xs-3">
 
-                            <button type="submit" class="btn btn-default" <?php echo $_SESSION['is_added']; ?>>Add</button>
+                            <button type="submit" class="btn btn-default" <?php echo $_SESSION['is_added']; ?>>Add
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -377,7 +385,7 @@
                         <table class="table" style=" margin-top: 15px;">
                             <thead>
                             <tr>
-                               <th scope="col">#</th>
+                                <th scope="col">#</th>
                                 <th scope="col">Picture</th>
                                 <th scope="col">meal name</th>
 
@@ -402,13 +410,15 @@
                                     </button>
                                 </td>
                                 <!-- Modal -->
-                                <div class="modal fade" id="Hamburger-1" data-backdrop="static" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="Hamburger-1" data-backdrop="static" tabindex="-1"
+                                     role="dialog"
                                      aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                                <div class="modal-header">
+                                            <div class="modal-header">
                                                 <h5 class="modal-title" id="staticBackdropLabel">Hamburger Edit</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -426,7 +436,8 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Edit
                                                 </button>
 
                                             </div>
@@ -445,7 +456,8 @@
                                 <td>50</td>
                                 <td>20</td>
                                 <td>
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#coffee-1">
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target="#coffee-1">
                                         Edit
                                     </button>
                                 </td>
@@ -456,7 +468,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="staticBackdropLabel">coffee Edit</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -474,7 +487,8 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Edit
                                                 </button>
 
                                             </div>
