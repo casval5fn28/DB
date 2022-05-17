@@ -108,8 +108,7 @@
                                                placeholder="enter add value" name = "value">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Add</button>
-                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Add</button>-->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -387,21 +386,18 @@
 
                         <?php
                         $dbservername = 'localhost';
-                        $dbname = 'database_hw2';
-                        $dbusername = 'root';
-                        $dbpassword = '';
+                        $dbname = 'db';
+                        $dbusername = 'admin';
+                        $dbpassword = 'admin';
 
-                        //連結MySQL Server
                         $conn = new PDO(
                             "mysql:host=$dbservername;dbname=$dbname",
-                            $dbusername,
-                            $dbpassword
-                        );
-                        # set the PDO error mode to exception
+                            $dbusername, $dbpassword);
+
                         $conn->setAttribute(
                             PDO::ATTR_ERRMODE,
-                            PDO::ERRMODE_EXCEPTION
-                        );
+                            PDO::ERRMODE_EXCEPTION);
+
                         $stmt = $conn->prepare("select * from product");
                         $stmt->execute();
                         while($row=$stmt->fetch()){
@@ -412,7 +408,8 @@
                             $product_price = $row['product_price'];
                             $product_amount = $row['product_amount'];
                             $product_shop = $row['product_shop'];
-                            print_row($PID,$product_name,$product_img,$product_img_type,$product_price,$product_amount , $product_shop);
+                            print_row($PID,$product_name,$product_img,$product_img_type,$product_price,
+                                $product_amount , $product_shop );
                         }
                         ?>
                         </tbody>
