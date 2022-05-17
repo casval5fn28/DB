@@ -59,7 +59,6 @@ try{
 
     $product_img = readimg();
     $product_img_type = read_picture_type();
-    $id = find_id();
 
     $stmt = $conn->prepare("INSERT INTO product (product_name, product_price,product_amount,product_img,product_img_type,shop_name) 
                         VALUES (:product_name,:product_price,:product_amount,:product_img,:product_img_type,:shop_name)");
@@ -68,8 +67,18 @@ try{
         'product_amount'=>$_POST['product_amount'], 'product_img'=>$product_img,
         'product_img_type'=>$product_img_type, 'shop_name'=>$_SESSION['shop_name']
     ));
-    $_SESSION['jump'] = true;
-    header("Location: nav.php");
+    echo <<<EOT
+            <!DOCTYPE html>
+            <html lang="en-us">
+                <body>
+                    <script>
+                        alert("Start a business successfully.");
+                        window.location.replace("../nav.php");
+                    </script>
+                </body>
+            </html>
+EOT;
+    exit();
 }
 catch (Exception $e) {
     $msg = $e->getMessage();
