@@ -15,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="js/jquery.disable.js"></script>
-    <title>Hello, world!</title>
+    <title>VberEats</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <ul class="nav nav-tabs">
-                <a class="navbar-brand " href="nav.php">WebSiteName</a>
+                <a class="navbar-brand " href="nav.php">VberEats</a>
                 <a class="navbar-brand " href="#home">Home</a>
                 <a class="navbar-brand " href="#menu1">shop</a>
                 <a class="navbar-brand " href="php/logout.php">Logout</a>
