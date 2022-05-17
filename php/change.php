@@ -52,7 +52,7 @@ try {
             <html lang="en-us">
                 <body>
                     <script>
-                        alert("Start a business successfully.");
+                        alert("Edit product successfully.");
                         window.location.replace("../nav.php");
                     </script>
                 </body>
