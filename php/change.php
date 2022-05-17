@@ -42,12 +42,11 @@ try {
     else if(formatError()){
         throw new Exception("Wrong format:".$GLOBALS['missed']);
     }
-    $new_id = $_POST['PID'];
+
     $stmt = $conn->prepare("update product set  product_name=:product_name ,product_price=:product_price, 
                     product_amount=:product_amount where PID=:PID");
     $stmt->execute(array('product_name'=>$_POST['new_name'], 'product_price'=>$_POST['new_price'],
-        'product_amount'=>$_POST['new_quantity'] , 'PID'=>$new_id
-    ));
+        'product_amount'=>$_POST['new_quantity']));
     echo <<<EOT
             <!DOCTYPE html>
             <html lang="en-us">
@@ -66,7 +65,7 @@ catch(Exception $e){
     $msg = $e->getMessage();
     echo <<<EOT
         <!DOCTYPE html>
-        <html>
+        <html lang="en-us">
         <body>
         <script>
         alert("$msg");
