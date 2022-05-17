@@ -59,7 +59,6 @@ try{
 
     $product_img = readimg();
     $product_img_type = read_picture_type();
-    $id = find_id();
 
     $stmt = $conn->prepare("INSERT INTO product (product_name, product_price,product_amount,product_img,product_img_type,shop_name) 
                         VALUES (:product_name,:product_price,:product_amount,:product_img,:product_img_type,:shop_name)");
