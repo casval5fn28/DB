@@ -60,7 +60,7 @@ try{
     $product_img = readimg();
     $product_img_type = read_picture_type();
 
-    $stmt = $conn->prepare("INSERT INTO product (product_name, product_price,product_amount,product_img,product_img_type,shop_name) 
+    $stmt = $conn->prepare("INSERT INTO product (product_name, product_price,product_amount,product_img,product_img_type,product_shop) 
                         VALUES (:product_name,:product_price,:product_amount,:product_img,:product_img_type,:shop_name)");
 
     $stmt->execute(array('product_name'=>$_POST['product_name'], 'product_price'=>$_POST['product_price'],
@@ -72,7 +72,7 @@ try{
             <html lang="en-us">
                 <body>
                     <script>
-                        alert("Start a business successfully.");
+                        alert("Add product Successfully.");
                         window.location.replace("../nav.php");
                     </script>
                 </body>

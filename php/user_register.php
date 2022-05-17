@@ -35,7 +35,7 @@ try {
         throw new Exception('latitude and longitude can only contains numbers!');
         //latitude and longitude only contains numbers and letters
     }
-    if (mb_strlen($phonenumber) != 10 || !preg_match("#^[0-9]+$#", $phonenumber)) {
+    if (mb_strlen($phonenumber) != 10) {
         throw new Exception('phone number needs 10 numbers.');
         //phone number needs 10 numbers.
     }
