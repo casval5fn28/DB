@@ -336,7 +336,7 @@
 
             <h3>ADD</h3>
             <!-- upload meal -->
-            <form action="shop_add.php" method="post" class="form-group" enctype="multipart/form-data">
+            <form action="php/shop_add.php" method="post" class="form-group" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-xs-6">
                         <label for="ex3">meal name</label>
@@ -397,19 +397,22 @@
                         $conn->setAttribute(
                             PDO::ATTR_ERRMODE,
                             PDO::ERRMODE_EXCEPTION);
-
-                        $stmt = $conn->prepare("select * from product");
-                        $stmt->execute();
-                        while($row=$stmt->fetch()){
-                            $PID = $row['PID'];
-                            $product_name = $row['product_name'];
-                            $product_img = $row['product_img'];
-                            $product_img_type = $row['product_img_type'];
-                            $product_price = $row['product_price'];
-                            $product_amount = $row['product_amount'];
-                            $product_shop = $row['product_shop'];
-                            print_row($PID,$product_name,$product_img,$product_img_type,$product_price,
-                                $product_amount , $product_shop );
+                        $_SESSION['product_shop'] = "shop_name";
+                        if(isset($_SESSION['product_shop'])){
+                            $product_shop = $_SESSION['product_shop'];
+                            $stmt = $conn->prepare("select * from product where product_shop=:product_shop");
+                            $stmt->execute(array('product_shop' => $product_shop));
+                            $order = 0;
+                            while($row=$stmt->fetch()){
+                                $order++;
+                                $PID = $row['PID'];
+                                $product_img_type = $row['product_img_type'];
+                                $product_img = $row['product_img'];
+                                $product_name = $row['product_name'];
+                                $product_price = $row['product_price'];
+                                $product_amount = $row['product_amount'];
+                                print_row($order,$PID,$product_img_type,$product_img,$product_name,$product_price,$product_amount);
+                            }
                         }
                         ?>
                         </tbody>
