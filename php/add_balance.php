@@ -7,32 +7,31 @@ $dbusername = 'admin';
 $dbpassword = 'admin';
 
 try {
-    if (!isset($_POST['latitude']) || !isset($_POST['longitude'])) {
+    if (!isset($_POST['value'])) {
         header("Location: ../nav.php");
         exit();
     }
-    if (empty($_POST['latitude']) || empty($_POST['longitude'])) {
-        throw new Exception('Please input latitude and longitude!');
+    if (empty($_POST['value']) ) {
+        throw new Exception('Please enter value!');
     }
-    if(!is_numeric($_POST['latitude']) || !is_numeric($_POST['longitude'])){
-        throw new Exception("latitude and longitude can only contains numbers!");
+    if(!is_numeric($_POST['value'])){
+        throw new Exception("Value can only contains numbers!");
     }
-    $latitude = $_POST['latitude'];
-    $longitude = $_POST['longitude'];
+    $value = (int)$_POST['value'];
+
     $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-    $stat = $conn->prepare("UPDATE user SET user_location = ST_GeometryFromText(:location) WHERE user_account = :user_account");
-    $stat->execute(array('location' => 'POINT(' . $longitude . ' ' . $latitude . ')', 'user_account' => $_SESSION['user_account']));
-    $_SESSION['user_latitude'] = $latitude;
-    $_SESSION['user_longitude'] = $longitude;
+    $stat = $conn->prepare("UPDATE user SET user_balance = :user_balance WHERE user_account = :user_account");
+    $stat->execute(array('user_balance' => $value, 'user_account' => $_SESSION['user_account']));
+    $_SESSION['user_balance'] = $value;
     echo <<<EOT
             <!DOCTYPE html>
             <html lang="en-us">
                 <body>
                     <script>
-                        alert("Update locaion successfully.");
+                        alert("Add balance successfully.");
                         window.location.replace("../nav.php");
                     </script>
                 </body>

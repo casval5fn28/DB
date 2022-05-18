@@ -14,7 +14,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="js/jquery.disable.js"></script>
+    <script src="js/check_shop_name.js"></script>
     <title>VberEats</title>
 </head>
 
@@ -108,7 +108,8 @@
                                                placeholder="enter add value" name = "value">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Add</button>-->
                                     </div>
                                 </div>
                             </form>
@@ -301,7 +302,8 @@
                             <label for="ex5">shop name</label>
                             <input class="form-control" id="ex5" name="shop_name"
                                    placeholder="<?php echo $_SESSION['shop_name']; ?>"
-                                   type="text" <?php echo $_SESSION['is_manger']; ?>>
+                                   type="text" <?php echo $_SESSION['is_manger']; ?> oninput="check_shop_name(this.value);">
+                            <label id ="check_shop_name"></label>
                         </div>
                         <div class="col-xs-2">
                             <label for="ex5">shop category</label>

@@ -22,7 +22,7 @@ try {
     $shop_latitude = $_POST['shop_latitude'];
     $shop_longitude = $_POST['shop_longitude'];
 
-    if (!preg_match("#^[a-zA-Z0-9_ .\-]+$#", $shop_name) || !preg_match("#^[a-zA-Z0-9_ .\-]+$#", $shop_category)) {
+    if (!preg_match("#^[a-zA-Z0-9_ .]+$#", $shop_name) || !preg_match("#^[a-zA-Z0-9_ .]+$#", $shop_category)) {
         throw new Exception('shop_name or shop_category illegal format!');
     }
     if (!is_numeric($shop_latitude) || !is_numeric($shop_longitude)) {

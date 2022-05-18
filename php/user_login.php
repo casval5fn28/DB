@@ -37,8 +37,8 @@ try {
             $_SESSION['user_phone'] = $row['user_phone'];
             $sub = substr($row['user_location'], 6, -1);
             $point = explode(' ', $sub);
-            $_SESSION['longitude'] = $point[0];
-            $_SESSION['latitude'] = $point[1];
+            $_SESSION['user_longitude'] = $point[0];
+            $_SESSION['user_latitude'] = $point[1];
             $_SESSION['user_type'] = $row['user_type'];
             if($row['user_type'] == "user"){
                 $_SESSION['is_manger'] = "";
