@@ -302,26 +302,26 @@
                             <label for="ex5">shop name</label>
                             <input class="form-control" id="ex5" name="shop_name"
                                    placeholder="<?php echo $_SESSION['shop_name']; ?>"
-                                   type="text" <?php echo $_SESSION['is_manger']; ?> oninput="check_shop_name(this.value);">
+                                   type="text" <?php if($_SESSION['user_type']=='manger'){ echo "disabled";}; ?> oninput="check_shop_name(this.value);">
                             <label id ="check_shop_name"></label>
                         </div>
                         <div class="col-xs-2">
                             <label for="ex5">shop category</label>
                             <input class="form-control" id="ex5" name="shop_category"
                                    placeholder="<?php echo $_SESSION['shop_category']; ?>"
-                                   type="text" <?php echo $_SESSION['is_manger']; ?>>
+                                   type="text" <?php if($_SESSION['user_type']=='manger'){ echo "disabled";}; ?>>
                         </div>
                         <div class="col-xs-2">
                             <label for="ex6">latitude</label>
                             <input class="form-control" id="ex6" name="shop_latitude"
                                    placeholder="<?php echo $_SESSION['shop_latitude']; ?>"
-                                   type="text" <?php echo $_SESSION['is_manger']; ?>>
+                                   type="text" <?php if($_SESSION['user_type']=='manger'){ echo "disabled";}; ?>>
                         </div>
                         <div class="col-xs-2">
                             <label for="ex8">longitude</label>
                             <input class="form-control" id="ex8" name="shop_longitude"
                                    placeholder="<?php echo $_SESSION['shop_longitude']; ?>"
-                                   type="text" <?php echo $_SESSION['is_manger']; ?>>
+                                   type="text" <?php if($_SESSION['user_type']=='manger'){ echo "disabled";}; ?>>
                         </div>
                     </div>
                 </div>
@@ -414,10 +414,10 @@
                                 $product_price = $row['product_price'];
                                 $product_amount = $row['product_amount'];
                                 echo<<<EOT
+                                    <!DOCTYPE html>
                                     <tr>
                                         <th scope="row">$order</th>
                                         <td><img src="data:$product_img_type; base64,$product_img" width="50%" height="50%" alt="Hamburger"></td>
-        
                                         <td>$product_name</td>
                                         <td>$product_price</td>
                                         <td>$product_amount</td>
@@ -436,7 +436,7 @@
                                                         </div>
                                                         
                                                         <!--change_meal form-->
-                                                        <form action="change.php" method="post">
+                                                        <form action="php/change.php" method="post">
                                                             <div class="modal-body">
                                                                 <div class="row" >
                                                                     <div class="col-xs-6">
@@ -457,12 +457,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <form action="delete.php" method="post">
+                                        <form action="/php/delete.php" method="post">
                                             <input type="hidden" name="PID" value="$PID">
                                             <td><button type="submit" class="btn btn-danger">Delete</button></td>
                                         </form>
-                                    
-EOT;
+                                    EOT;
                             }
                         }
                         ?>
