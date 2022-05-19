@@ -400,7 +400,7 @@
                             PDO::ATTR_ERRMODE,
                             PDO::ERRMODE_EXCEPTION);
                         $_SESSION['product_shop'] = "shop_name";
-                        if(isset($_SESSION['product_shop'])){
+                        if($_SESSION['user_type'] == 'manger'){
                             $product_shop = $_SESSION['product_shop'];
                             $stmt = $conn->prepare("select * from product where product_shop=:product_shop");
                             $stmt->execute(array('product_shop' => $product_shop));
