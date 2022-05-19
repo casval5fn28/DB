@@ -413,7 +413,56 @@
                                 $product_name = $row['product_name'];
                                 $product_price = $row['product_price'];
                                 $product_amount = $row['product_amount'];
-                                print_row($order,$PID,$product_img_type,$product_img,$product_name,$product_price,$product_amount);
+                                echo<<<EOT
+                                    <tr>
+                                        <th scope="row">$order</th>
+                                        <td><img src="data:$product_img_type; base64,$product_img" width="50%" height="50%" alt="Hamburger"></td>
+        
+                                        <td>$product_name</td>
+                                        <td>$product_price</td>
+                                        <td>$product_amount</td>
+                                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Hamburger-1">
+                                        Edit
+                                        </button></td>
+                                        <!-- Modal -->
+                                            <div class="modal fade" id="Hamburger-1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">$product_name Edit</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        
+                                                        <!--change_meal form-->
+                                                        <form action="change.php" method="post">
+                                                            <div class="modal-body">
+                                                                <div class="row" >
+                                                                    <div class="col-xs-6">
+                                                                        <label for="ex71">Price</label>
+                                                                        <input class="form-control" id="ex71" name="product_price" type="text">
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <label for="ex41">Quantity</label>
+                                                                        <input class="form-control" id="ex41" name="product_amount" type="text">
+                                                                    </div>
+                                                                    <input type="hidden" name="PID" value="$PID">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-secondary">Edit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <form action="delete.php" method="post">
+                                            <input type="hidden" name="PID" value="$PID">
+                                            <td><button type="submit" class="btn btn-danger">Delete</button></td>
+                                        </form>
+                                    
+EOT;
                             }
                         }
                         ?>
