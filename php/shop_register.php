@@ -44,7 +44,6 @@ try {
         $stmt = $conn->prepare("INSERT INTO shop(shop_name, shop_location, shop_category, shop_owner) values (:shop_name, ST_GeometryFromText(:shop_location), :shop_category, :shop_owner)");
         $stmt->execute(array('shop_name' => $shop_name, 'shop_category' => $shop_category, 'shop_location' => 'POINT(' . $shop_longitude . ' ' . $shop_latitude . ')', 'shop_owner' => $_SESSION['user_account']));
         $_SESSION['user_type'] = "manger";
-        $_SESSION['is_manger'] = "disabled";
         $stmt = $conn->prepare("UPDATE user SET user_type = 'manger' WHERE user_account = :user_account");
         $stmt->execute(array('user_account'=>$_SESSION['user_account']));
         $_SESSION['shop_name'] = $shop_name;

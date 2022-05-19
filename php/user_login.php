@@ -41,13 +41,11 @@ try {
             $_SESSION['user_latitude'] = $point[1];
             $_SESSION['user_type'] = $row['user_type'];
             if($row['user_type'] == "user"){
-                $_SESSION['is_manger'] = "";
                 $_SESSION['shop_name'] = "macdonald";
                 $_SESSION['shop_longitude'] = "121.00028167648875";
                 $_SESSION['shop_latitude'] = "24.78472733371133";
                 $_SESSION['shop_category'] = "fast food";
             }else{
-                $_SESSION['is_manger'] = "disabled";
                 $stmt = $conn->prepare("SELECT shop_name, ST_Astext(shop_location) as shop_location, shop_category FROM shop WHERE shop_owner = :user_account");
                 $stmt->execute(array('user_account'=>$row['user_account']));
                 $row2 = $stmt->fetch();
