@@ -384,7 +384,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <form action="/php/delete.php" method="post">
+                                        <form action="php/delete.php" method="post">
                                             <input type="hidden" name="PID" value="$PID">
                                             <td><button type="submit" class="btn btn-danger">Delete</button></td>
                                         </form>
