@@ -3,7 +3,6 @@
 <html lang="en">
 <script>
     filter = {};
-    filter['type'] = 0;
 </script>
 
 <head>
@@ -19,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="js/check_shop_name.js"></script>
+    <script src="js/search_list.js"></script>
     <title>VberEats</title>
 </head>
 
@@ -138,7 +138,7 @@
                     <div class="col-sm-5">
 
 
-                        <select class="form-control" id="sel1" onchange="filter['distance'] = this.value ;">
+                        <select class="form-control" id="sel1" onchange="filter['distance'] = this.value">
                             <option>All</option>
                             <option>Near</option>
                             <option>Medium</option>
@@ -216,7 +216,6 @@
                     <button type="submit" style="margin-left: 18px;" class="btn btn-primary"
                             onclick="search_list(filter)">Search
                     </button>
-
                     <div class="row">
                         <div id="result-list" class="col-xs-8"></div>
                     </div>
@@ -334,6 +333,7 @@
                             $stmt = $conn->prepare("select * from product where product_shop=:product_shop");
                             $stmt->execute(array('product_shop' => $_SESSION['shop_name']));
                             $order = 0;
+                            unset($row);
                             while($row=$stmt->fetch()){
                                 $order++;
                                 $PID = $row['PID'];
@@ -386,7 +386,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <form action="/php/delete.php" method="post">
+                                        <form action="php/delete.php" method="post">
                                             <input type="hidden" name="PID" value="$PID">
                                             <td><button type="submit" class="btn btn-danger">Delete</button></td>
                                         </form>
@@ -402,7 +402,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    search_list(filter);
+</script>
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
 <script>
@@ -412,30 +414,7 @@
         });
     });
 </script>
-<script>
-    function search_list(filter) {
-            var querystring = "";
-            if (filter['shop_name']) querystring += "shop_name=" + filter['shop_name'];
-            if (filter['distance']) querystring += "&distance=" + filter['distance'];
-            if (filter['price_floor']) querystring += "&price_floor=" + filter['price_floor'];
-            if (filter['price_ceiling']) querystring += "&price_ceiling=" + filter['price_ceiling'];
-            if (filter['meal']) querystring += "&meal=" + filter['meal'];
-            if (filter['category']) querystring += "&category=" + filter['category'];
-            if (filter['type']) querystring += "&type=" + filter['type'];
-            var xhttp = new XMLHttpRequest();
 
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("result-list").innerHTML = this.responseText;
-                }
-            };
-            console.log(querystring);
-            xhttp.open("POST", "php/search.php", true);
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send(querystring);
-    }
-    search_list(filter);
-</script>
 <!-- Option 2: Separate Popper and Bootstrap JS -->
 <!--
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
