@@ -5,49 +5,32 @@ $dbname = 'db';
 $dbusername = 'admin';
 $dbpassword = 'admin';
 
-$conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-$missed = null;
-
-function formatError(){
-    $new_name = $_POST['new_name'];
-    $new_price = $_POST['new_price'];
-    $new_quantity = $_POST['new_quantity'];
-
-    if (!preg_match("#^[a-zA-Z0-9_ .\-]+$#", $new_name)) {
-        $GLOBALS['missed'] = "product_name";
-        return true;
-    }
-    else if(!preg_match("/^(?:[1-9][0-9]*|0)$/",$new_price)){
-        $GLOBALS['missed'] = "new_price";
-        return true;
-    }
-    else if(!preg_match("/^(?:[1-9][0-9]*|0)$/",$new_quantity)){
-        $GLOBALS['missed'] = "new_quantity";
-        return true;
-    }
-    else{
-        return false;
-    }
-}
 try {
-    if(!isset($_POST['new_price'])||!isset($_POST['new_quantity'])){
-        header("Location: nav.php");
-        exit();
+    if (empty($_POST['product_price']) || empty($_POST['product_amount'])) {
+        $error="";
+        if (empty($_POST['product_price'])){
+            $error=$error."Price".'\n';
+        }
+        else{
+            $error=$error."Quantity".'\n';
+        }
+        throw new Exception('Please fill :'."$error");
     }
-    else if(empty($_POST['new_name']) ||empty($_POST['new_price']) ||empty($_POST['new_amount'])){
-        throw new Exception('Please input all the field!');
+    if (!ctype_digit($_POST['product_price']) || !ctype_digit($_POST['product_amount']) || $_POST['product_price'] < 0 || $_POST['product_amount'] < 0) {
+        throw new Exception("Wrong formatt !! Must be all natural numbers !");
     }
-    else if(formatError()){
-        throw new Exception("Wrong format:".$GLOBALS['missed']);
-    }
+    else {
 
-    $stmt = $conn->prepare("update product set  product_name=:product_name ,product_price=:product_price, 
-                    product_amount=:product_amount where PID=:PID");
-    $stmt->execute(array('product_name'=>$_POST['new_name'], 'product_price'=>$_POST['new_price'],
-        'product_amount'=>$_POST['new_quantity']));
-    echo <<<EOT
+        $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $PID=$_POST['PID'];
+        $product_price=$_POST['product_price'];
+        $product_amount=$_POST['product_amount'];
+
+        $stmt = $conn->prepare("UPDATE product SET product_price=:product_price, product_amount=:product_amount where PID=:PID");
+        $stmt->execute(array( 'product_price' => $product_price, 'product_amount' => $product_amount, 'PID' => $PID));
+        echo <<<EOT
             <!DOCTYPE html>
             <html lang="en-us">
                 <body>
@@ -58,7 +41,8 @@ try {
                 </body>
             </html>
 EOT;
-    exit();
+        exit();
+    }
 }
 catch(Exception $e){
 
