@@ -14,6 +14,7 @@ try {
     if (isset($_REQUEST['meal'])) $meal = "%" . $_REQUEST['meal'] . "%";
     else $meal = "%%";
 
+
     $price_floor = 0;
     $price_ceiling = 2147483647;
     if (isset($_REQUEST['price_floor'])) {
@@ -23,6 +24,12 @@ try {
         $price_ceiling = $_REQUEST['price_ceiling'];
     }
 
+    if (!preg_match("#^[a-zA-Z0-9 _%]+$#", $shop_name ) ||!preg_match("#^[a-zA-Z0-9 _%]+$#", $category )
+        ||!preg_match("#^[0-9]+$#", $price_floor )||!preg_match("#^[0-9]+$#", $price_ceiling )
+        ||!preg_match("#^[a-zA-Z0-9 _%]+$#", $meal) ){
+        throw new Exception('Illgeal letter detect!');
+    //Account and password only contains numbers and letters(sql injection)
+}
     if (isset($_REQUEST['price_floor']) || isset($_REQUEST['price_ceiling']) || isset($_REQUEST['meal'])) {
 
         $querystring = "SELECT DISTINCT shop_name, shop_category, ST_Distance_Sphere(user_location , shop_location) as location
