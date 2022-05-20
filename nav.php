@@ -1,6 +1,9 @@
 <?php session_start(); ?>
 <!doctype html>
 <html lang="en">
+<script>
+    filter = {};
+</script>
 
 <head>
     <!-- Required meta tags -->
@@ -124,170 +127,96 @@
                  -->
             <h3>Search</h3>
             <div class=" row  col-xs-8">
-                <form class="form-horizontal" action="/action_page.php">
-                    <div class="form-group">
-                        <label class="control-label col-sm-1" for="Shop">Shop</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" placeholder="Enter Shop name">
-                        </div>
-                        <label class="control-label col-sm-1" for="distance">distance</label>
-                        <div class="col-sm-5">
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="Shop">Shop</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" placeholder="Enter Shop name"
+                               oninput="filter['shop_name'] = this.value">
+                    </div>
+                    <label class="control-label col-sm-1" for="distance">distance</label>
+                    <div class="col-sm-5">
 
 
-                            <select class="form-control" id="sel1">
-                                <option>near</option>
-                                <option>medium</option>
-                                <option>far</option>
+                        <select class="form-control" id="sel1" onchange="filter['distance'] = this.value">
+                            <option>All</option>
+                            <option>Near</option>
+                            <option>Medium</option>
+                            <option>Far</option>
 
-                            </select>
-                        </div>
-
+                        </select>
                     </div>
 
-                    <div class="form-group">
+                </div>
 
-                        <label class="control-label col-sm-1" for="Price">Price</label>
-                        <div class="col-sm-2">
+                <div class="form-group">
 
-                            <input type="text" class="form-control">
+                    <label class="control-label col-sm-1" for="Price">Price</label>
+                    <div class="col-sm-2">
 
-                        </div>
-                        <label class="control-label col-sm-1" for="~">~</label>
-                        <div class="col-sm-2">
-
-                            <input type="text" class="form-control">
-
-                        </div>
-                        <label class="control-label col-sm-1" for="Meal">Meal</label>
-                        <div class="col-sm-5">
-                            <input type="text" list="Meals" class="form-control" id="Meal" placeholder="Enter Meal">
-                            <datalist id="Meals">
-                                <option value="Hamburger">
-                                <option value="coffee">
-                            </datalist>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-1" for="category"> category</label>
-
-
-                        <div class="col-sm-5">
-                            <input type="text" list="categorys" class="form-control" id="category"
-                                   placeholder="Enter shop category">
-                            <datalist id="categorys">
-                                <option value="fast food">
-
-                            </datalist>
-                        </div>
-                        <button type="submit" style="margin-left: 18px;" class="btn btn-primary">Search</button>
+                        <input type="text" class="form-control" oninput="filter['price_floor'] = this.value">
 
                     </div>
-                </form>
-            </div>
-            <div class="row">
-                <div class="  col-xs-8">
-                    <table class="table" style=" margin-top: 15px;">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
+                    <label class="control-label col-sm-1" for="~">~</label>
+                    <div class="col-sm-2">
 
-                            <th scope="col">shop name</th>
-                            <th scope="col">shop category</th>
-                            <th scope="col">Distance</th>
+                        <input type="text" class="form-control" oninput="filter['price_ceiling'] = this.value">
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
+                    </div>
+                    <label class="control-label col-sm-1" for="Meal">Meal</label>
+                    <div class="col-sm-5">
+                        <input type="text" list="meals" class="form-control" id="meal"
+                               onchange="filter['meal'] = this.value"
+                               placeholder="Enter meal">
+                        <datalist id="meals">
+                            <?php
+                            $dbservername = 'localhost';
+                            $dbname = 'db';
+                            $dbusername = 'admin';
+                            $dbpassword = 'admin';
+                            $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
+                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = $conn->prepare("SELECT DISTINCT product_name FROM product");
+                            $sql->execute();
+                            $result = $sql->fetchAll();
+                            foreach ($result as &$row) {
+                                $meals = $row['product_name'];
+                                echo '<option value="' . $meals . '">';
+                            }
+                            ?>
+                        </datalist>
+                    </div>
+                </div>
 
-                            <td>macdonald</td>
-                            <td>fast food</td>
-
-                            <td>near</td>
-                            <td>
-                                <button type="button" class="btn btn-info " data-toggle="modal"
-                                        data-target="#macdonald">Open menu
-                                </button>
-                            </td>
-
-                        </tr>
-
-
-                        </tbody>
-                    </table>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="macdonald" data-backdrop="static" tabindex="-1" role="dialog"
-                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">menu</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <!--  -->
-
-                                    <div class="row">
-                                        <div class="  col-xs-12">
-                                            <table class="table" style=" margin-top: 15px;">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Picture</th>
-
-                                                    <th scope="col">meal name</th>
-
-                                                    <th scope="col">price</th>
-                                                    <th scope="col">Quantity</th>
-
-                                                    <th scope="col">Order check</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td><img src="Picture/1.jpg" with="50" heigh="10" alt="Hamburger">
-                                                    </td>
-
-                                                    <td>Hamburger</td>
-
-                                                    <td>80</td>
-                                                    <td>20</td>
-
-                                                    <td><input type="checkbox" id="cbox1" value="Hamburger"></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td><img src="Picture/2.jpg" with="10" heigh="10" alt="coffee"></td>
-
-                                                    <td>coffee</td>
-
-                                                    <td>50</td>
-                                                    <td>20</td>
-
-                                                    <td><input type="checkbox" id="cbox2" value="coffee"></td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="category"> category</label>
 
 
-                                    <!--  -->
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Order</button>
-                                </div>
-                            </div>
-
-                        </div>
+                    <div class="col-sm-5">
+                        <input type="text" list="categorys" class="form-control" id="category"
+                               onchange="filter['category'] = this.value"
+                               placeholder="Enter shop category">
+                        <datalist id="categorys">
+                            <?php
+                            $dbservername = 'localhost';
+                            $dbname = 'db';
+                            $dbusername = 'admin';
+                            $dbpassword = 'admin';
+                            $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
+                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = $conn->query("SELECT DISTINCT shop_category FROM shop");
+                            $result = $sql->fetchAll();
+                            foreach ($result as &$row) {
+                                $category = $row['shop_category'];
+                                echo '<option value="' . $category . '">';
+                            }
+                            ?>
+                        </datalist>
+                    </div>
+                    <button type="submit" style="margin-left: 18px;" class="btn btn-primary"
+                            onclick="search_list(filter)">Search
+                    </button>
+                    <div class="row">
+                        <div id="result-list" class="col-xs-8"></div>
                     </div>
                 </div>
 
