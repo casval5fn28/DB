@@ -339,35 +339,35 @@
             <h3>ADD</h3>
             <!-- upload meal -->
             <form action="php/shop_add.php" method="post" class="form-group" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <label for="ex3">meal name</label>
-                        <input name="product_name" class="form-control" id="ex3" type="text">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label for="ex3">meal name</label>
+                            <input name="product_name" class="form-control" id="ex3" type="text" <?php if($_SESSION['user_type']!='manger'){ echo "disabled";}; ?> >
+                        </div>
                     </div>
-                </div>
-                <div class="row" style=" margin-top: 15px;">
-                    <div class="col-xs-3">
-                        <label for="ex7">price</label>
-                        <input name="product_price" class="form-control" id="ex7" type="text">
-                    </div>
-                    <div class="col-xs-3">
-                        <label for="ex4">quantity</label>
-                        <input name="product_amount" class="form-control" id="ex4" type="text">
-                    </div>
-                </div>
-
-                <div class="row" style=" margin-top: 25px;">
-
-                    <div class=" col-xs-3">
-                        <label for="ex12">上傳圖片</label>
-                        <input id="myFile" type="file" name="myFile" multiple class="file-loading">
+                    <div class="row" style=" margin-top: 15px;">
+                        <div class="col-xs-3">
+                            <label for="ex7">price</label>
+                            <input name="product_price" class="form-control" id="ex7" type="text" <?php if($_SESSION['user_type']!='manger'){ echo "disabled";}; ?> >
+                        </div>
+                        <div class="col-xs-3">
+                            <label for="ex4">quantity</label>
+                            <input name="product_amount" class="form-control" id="ex4" type="text" <?php if($_SESSION['user_type']!='manger'){ echo "disabled";}; ?> >
+                        </div>
                     </div>
 
-                    <div class=" col-xs-3">
-                        <input style=" margin-top: 15px;" type="submit" class="btn btn-primary" value="Add">
-                    </div>
+                    <div class="row" style=" margin-top: 25px;">
 
-                </div>
+                        <div class=" col-xs-3">
+                            <label for="ex12">上傳圖片</label>
+                            <input id="myFile" type="file" name="myFile" multiple class="file-loading" <?php if($_SESSION['user_type']!='manger'){ echo "disabled";}; ?> >
+                        </div>
+
+                        <div class=" col-xs-3">
+                            <input style=" margin-top: 15px;" type="submit" class="btn btn-primary" value="Add" <?php if($_SESSION['user_type']!='manger'){ echo "disabled";}; ?> >
+                        </div>
+
+                    </div>
             </form>
             <div class="row">
                 <div class="  col-xs-8">
