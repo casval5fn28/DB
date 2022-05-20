@@ -329,7 +329,7 @@
 
                 <div class=" row" style=" margin-top: 25px;">
                     <div class=" col-xs-3">
-                        <button type="submit" class="btn btn-primary" <?php echo $_SESSION['is_manger']; ?>>register
+                        <button type="submit" class="btn btn-primary" <?php if($_SESSION['user_type']=='manger'){ echo "disabled";}; ?>>register
                         </button>
                     </div>
                 </div>
