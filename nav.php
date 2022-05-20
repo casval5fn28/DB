@@ -421,11 +421,11 @@
                                         <td>$product_name</td>
                                         <td>$product_price</td>
                                         <td>$product_amount</td>
-                                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#Hamburger-1">
+                                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#$PID">Edit</button></td>
                                         Edit
                                         </button></td>
                                         <!-- Modal -->
-                                            <div class="modal fade" id="Hamburger-1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal fade" id="$PID" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
