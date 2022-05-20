@@ -3,6 +3,7 @@
 <html lang="en">
 <script>
     filter = {};
+    filter['type'] = 0;
 </script>
 
 <head>
@@ -137,7 +138,7 @@
                     <div class="col-sm-5">
 
 
-                        <select class="form-control" id="sel1" onchange="filter['distance'] = this.value">
+                        <select class="form-control" id="sel1" onchange="filter['distance'] = this.value ;">
                             <option>All</option>
                             <option>Near</option>
                             <option>Medium</option>
@@ -215,6 +216,7 @@
                     <button type="submit" style="margin-left: 18px;" class="btn btn-primary"
                             onclick="search_list(filter)">Search
                     </button>
+
                     <div class="row">
                         <div id="result-list" class="col-xs-8"></div>
                     </div>
@@ -384,7 +386,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <form action="php/delete.php" method="post">
+                                        <form action="/php/delete.php" method="post">
                                             <input type="hidden" name="PID" value="$PID">
                                             <td><button type="submit" class="btn btn-danger">Delete</button></td>
                                         </form>
@@ -419,6 +421,7 @@
             if (filter['price_ceiling']) querystring += "&price_ceiling=" + filter['price_ceiling'];
             if (filter['meal']) querystring += "&meal=" + filter['meal'];
             if (filter['category']) querystring += "&category=" + filter['category'];
+            if (filter['type']) querystring += "&type=" + filter['type'];
             var xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = function () {
