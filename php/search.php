@@ -34,15 +34,14 @@ try {
     }
     if (isset($_REQUEST['price_floor']) || isset($_REQUEST['price_ceiling']) || isset($_REQUEST['meal'])) {
 
-        $querystring = "SELECT DISTINCT shop_name, shop_category, ST_Distance_Sphere(user_location , shop_location) as location
+        $querystring = "SELECT DISTINCT shop_name, shop_category, ST_Distance_Sphere((SELECT user_location FROM user WHERE user_account = :user_account) , shop_location) as location
                             FROM shop JOIN product
                             ON product.product_shop = shop.shop_name
-                            JOIN user
-                            ON user.user_account = shop.shop_owner
                             WHERE shop_name LIKE :shop_name 
                             AND shop_category LIKE :category 
                             AND product_name LIKE :meal
-                            AND product_price BETWEEN :price_floor AND :price_ceiling";
+                            AND product_price BETWEEN :price_floor AND :price_ceiling
+                            ";
 
         $querystring .= $type;
         $sql = $db->prepare($querystring);
@@ -52,7 +51,8 @@ try {
             'category' => $category,
             'meal' => $meal,
             'price_floor' => $price_floor,
-            'price_ceiling' => $price_ceiling
+            'price_ceiling' => $price_ceiling,
+            'user_account' => $_SESSION['user_account']
         ));
 
     }
@@ -60,9 +60,9 @@ try {
     else {
 
         $querystring = "SELECT DISTINCT shop_name, shop_category, shop_owner, ST_Distance_Sphere(user_location , shop_location) as location
-                            FROM shop JOIN  user
-                            ON user.user_account = shop.shop_owner
-                            WHERE shop_name LIKE :shop_name 
+                            FROM shop, user
+                            WHERE user.user_account = :user_account
+                            AND shop_name LIKE :shop_name 
                             AND shop_category LIKE :category 
                             ";
         $querystring .= $type;
@@ -70,6 +70,7 @@ try {
         $sql->execute(array(
             'shop_name' => $shop_name,
             'category' => $category,
+            'user_account'=>$_SESSION['user_account']
         ));
 
     }
@@ -83,11 +84,11 @@ try {
                         <tr>
                             <th scope="col">#</th>
 
-                            <th scope="col">shop name<button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_name, shop_category, location' , search_list(filter);">▲</button>
+                            <th scope="col">shop name <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_name, shop_category, location' , search_list(filter);">▲</button>
                                 <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_name DESC, shop_category, location' , search_list(filter);">▼</button></th>
-                            <th scope="col">shop category<button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_category, shop_name,  location';search_list(filter);">▲</button>
+                            <th scope="col">shop category <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_category, shop_name,  location';search_list(filter);">▲</button>
                                 <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_category DESC, shop_name,  location';search_list(filter);">▼</button></th>
-                            <th scope="col">Distance<button type="button" class="upper" onclick="filter['type'] = 'ORDER BY location, shop_name, shop_category';search_list(filter);">▲</button>
+                            <th scope="col">Distance <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY location, shop_name, shop_category';search_list(filter);">▲</button>
                                 <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY location DESC, shop_name, shop_category '; search_list(filter);">▼</button></th>
                         </tr>
                         <tr style="visibility:hidden">
