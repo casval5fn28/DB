@@ -53,7 +53,7 @@ catch(Exception $e){
         <body>
         <script>
         alert("$msg");
-        window.location.replace("nav.php");
+        window.location.replace("../nav.php");
         </script>
         </body>
         </html>
