@@ -328,11 +328,9 @@
                         $conn->setAttribute(
                             PDO::ATTR_ERRMODE,
                             PDO::ERRMODE_EXCEPTION);
-                        $_SESSION['product_shop'] = "shop_name";
                         if($_SESSION['user_type'] == 'manger'){
-                            $product_shop = $_SESSION['product_shop'];
                             $stmt = $conn->prepare("select * from product where product_shop=:product_shop");
-                            $stmt->execute(array('product_shop' => $product_shop));
+                            $stmt->execute(array('product_shop' => $_SESSION['shop_name']));
                             $order = 0;
                             while($row=$stmt->fetch()){
                                 $order++;
@@ -412,7 +410,29 @@
         });
     });
 </script>
+<script>
+    function search_list(filter) {
+            var querystring = "";
+            if (filter['shop_name']) querystring += "shop_name=" + filter['shop_name'];
+            if (filter['distance']) querystring += "&distance=" + filter['distance'];
+            if (filter['price_floor']) querystring += "&price_floor=" + filter['price_floor'];
+            if (filter['price_ceiling']) querystring += "&price_ceiling=" + filter['price_ceiling'];
+            if (filter['meal']) querystring += "&meal=" + filter['meal'];
+            if (filter['category']) querystring += "&category=" + filter['category'];
+            var xhttp = new XMLHttpRequest();
 
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("result-list").innerHTML = this.responseText;
+                }
+            };
+            console.log(querystring);
+            xhttp.open("POST", "php/search.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(querystring);
+    }
+    search_list(filter);
+</script>
 <!-- Option 2: Separate Popper and Bootstrap JS -->
 <!--
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
