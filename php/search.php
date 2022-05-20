@@ -14,7 +14,6 @@ try {
     if (isset($_REQUEST['meal'])) $meal = "%" . $_REQUEST['meal'] . "%";
     else $meal = "%%";
 
-
     $price_floor = 0;
     $price_ceiling = 2147483647;
     if (isset($_REQUEST['price_floor'])) {
@@ -24,12 +23,15 @@ try {
         $price_ceiling = $_REQUEST['price_ceiling'];
     }
 
+    if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
+    else $type = "ORDER BY shop_name, shop_category, location";
+
     if (!preg_match("#^[a-zA-Z0-9 _%]+$#", $shop_name ) ||!preg_match("#^[a-zA-Z0-9 _%]+$#", $category )
         ||!preg_match("#^[0-9]+$#", $price_floor )||!preg_match("#^[0-9]+$#", $price_ceiling )
         ||!preg_match("#^[a-zA-Z0-9 _%]+$#", $meal) ){
         throw new Exception('Illgeal letter detect!');
-    //Account and password only contains numbers and letters(sql injection)
-}
+        //Account and password only contains numbers and letters(sql injection)
+    }
     if (isset($_REQUEST['price_floor']) || isset($_REQUEST['price_ceiling']) || isset($_REQUEST['meal'])) {
 
         $querystring = "SELECT DISTINCT shop_name, shop_category, ST_Distance_Sphere(user_location , shop_location) as location
@@ -42,6 +44,7 @@ try {
                             AND product_name LIKE :meal
                             AND product_price BETWEEN :price_floor AND :price_ceiling";
 
+        $querystring .= $type;
         $sql = $db->prepare($querystring);
 
         $sql->execute(array(
@@ -60,7 +63,9 @@ try {
                             FROM shop JOIN  user
                             ON user.user_account = shop.shop_owner
                             WHERE shop_name LIKE :shop_name 
-                            AND shop_category LIKE :category ";
+                            AND shop_category LIKE :category 
+                            ";
+        $querystring .= $type;
         $sql = $db->prepare($querystring);
         $sql->execute(array(
             'shop_name' => $shop_name,
@@ -71,18 +76,27 @@ try {
 
     $result = $sql->fetchAll();
     echo <<< EOT
-        
         <div class="row">
             <div class=" col-xs-8">
-                    <table class="table" style= "margin-top: 15px;" >
+                    <table class="table" id="search" style= "margin-top: 15px;" >
                         <thead>
                         <tr>
                             <th scope="col">#</th>
 
-                            <th scope="col">shop name</th>
-                            <th scope="col">shop category</th>
-                            <th scope="col">Distance</th>
+                            <th scope="col">shop name<button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_name, shop_category, location' , search_list(filter);">▲</button>
+                                <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_name DESC, shop_category, location' , search_list(filter);">▼</button></th>
+                            <th scope="col">shop category<button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_category, shop_name,  location';search_list(filter);">▲</button>
+                                <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY shop_category DESC, shop_name,  location';search_list(filter);">▼</button></th>
+                            <th scope="col">Distance<button type="button" class="upper" onclick="filter['type'] = 'ORDER BY location, shop_name, shop_category';search_list(filter);">▲</button>
+                                <button type="button" class="upper" onclick="filter['type'] = 'ORDER BY location DESC, shop_name, shop_category '; search_list(filter);">▼</button></th>
                         </tr>
+                        <tr style="visibility:hidden">
+                            <td></td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxx</td>
+                        </tr>
+                  
                         </thead>
                     
             </div>
