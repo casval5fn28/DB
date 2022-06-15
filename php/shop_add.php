@@ -8,6 +8,7 @@ $dbpassword = 'admin';
 
 $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 $missed = null;
 
 function bad_format(){
@@ -60,11 +61,15 @@ try{
     $product_img = readimg();
     $product_img_type = read_picture_type();
 
+    $product_name = $_POST['product_name'];
+    $stmt = $conn->prepare("SELECT product_name from product where product_name = :product_name");
+    $stmt->execute(array('product_name' => $product_name));
+
     if ($stmt->rowCount() != 0) {
         throw new Exception("Product name has been register!!");
     }
     else {
-        $stmt = $conn->prepare("INSERT INTO product (product_name, product_price,product_amount,product_img,product_img_type,shop_name) 
+        $stmt = $conn->prepare("INSERT INTO product (product_name, product_price,product_amount,product_img,product_img_type,product_shop) 
                         VALUES (:product_name,:product_price,:product_amount,:product_img,:product_img_type,:shop_name)");
 
         $stmt->execute(array('product_name'=>$_POST['product_name'], 'product_price'=>$_POST['product_price'],
@@ -76,8 +81,8 @@ try{
             <html lang="en-us">
                 <body>
                     <script>
-                        alert("Start a business successfully.");
-                        window.location.replace("../nav.php");
+                        alert("Add a product successfully.");
+                        window.location.replace("../nav.php#shop");
                     </script>
                 </body>
             </html>
@@ -94,7 +99,7 @@ catch (Exception $e) {
             <body>
                 <script>
                 alert("$msg");
-                window.location.replace("../nav.php#menu1");
+                window.location.replace("../nav.php#shop");
                 </script>
             </body>
         </html>

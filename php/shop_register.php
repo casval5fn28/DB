@@ -22,7 +22,7 @@ try {
     $shop_latitude = $_POST['shop_latitude'];
     $shop_longitude = $_POST['shop_longitude'];
 
-    if (!preg_match("#^[a-zA-Z0-9_ .\-]+$#", $shop_name) || !preg_match("#^[a-zA-Z0-9_ .\-]+$#", $shop_category)) {
+    if (!preg_match("#^[a-zA-Z0-9_ .]+$#", $shop_name) || !preg_match("#^[a-zA-Z0-9_ .]+$#", $shop_category)) {
         throw new Exception('shop_name or shop_category illegal format!');
     }
     if (!is_numeric($shop_latitude) || !is_numeric($shop_longitude)) {
@@ -44,7 +44,6 @@ try {
         $stmt = $conn->prepare("INSERT INTO shop(shop_name, shop_location, shop_category, shop_owner) values (:shop_name, ST_GeometryFromText(:shop_location), :shop_category, :shop_owner)");
         $stmt->execute(array('shop_name' => $shop_name, 'shop_category' => $shop_category, 'shop_location' => 'POINT(' . $shop_longitude . ' ' . $shop_latitude . ')', 'shop_owner' => $_SESSION['user_account']));
         $_SESSION['user_type'] = "manger";
-        $_SESSION['is_manger'] = "disabled";
         $stmt = $conn->prepare("UPDATE user SET user_type = 'manger' WHERE user_account = :user_account");
         $stmt->execute(array('user_account'=>$_SESSION['user_account']));
         $_SESSION['shop_name'] = $shop_name;
@@ -57,7 +56,7 @@ try {
                 <body>
                     <script>
                         alert("Start a business successfully.");
-                        window.location.replace("../nav.php");
+                        window.location.replace("../nav.php#shop");
                     </script>
                 </body>
             </html>
@@ -72,7 +71,7 @@ try {
             <body>
                 <script>
                 alert("$msg");
-                window.location.replace("../nav.php#menu1");
+                window.location.replace("../nav.php#shop");
                 </script>
             </body>
         </html>
